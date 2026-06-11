@@ -1,0 +1,16 @@
+[
+  {
+    "id": "79fff447-f3c2-4fdb-86d8-8b72a81c8767",
+    "name": "zayaan",
+    "email": "gocode76@gmail.com",
+    "passwordHash": "c191f1eb8bd121ffb23182ffe5292e27c5b8973b57465a6f19d39fabea78a1f8",
+    "createdAt": "2026-06-11T11:18:27.693Z"
+  },
+  {
+    "id": "89e193a9-3015-492f-93f8-994c096a8fe4",
+    "name": "Test AI",
+    "email": "test+ai@example.com",
+    "passwordHash": "c34a5bb0084cb4187fb5ed2c2551363b578d3043a9e11aaae2faae58c8509710",
+    "createdAt": "2026-06-11T11:26:22.581Z"
+  }
+]

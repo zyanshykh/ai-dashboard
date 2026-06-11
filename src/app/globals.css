@@ -1,26 +1,159 @@
 @import "tailwindcss";
 
+/* Design tokens and theme variables — modern 2026 dark-first system */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Color system */
+  --bg: #0b1220; /* deeper slate/zinc background */
+  --surface: #101827; /* subtle near-black surface */
+  --muted: #94a3b8; /* secondary text */
+  --text: #e7eef9; /* primary text */
+  --primary: #06b6d4; /* cyan */
+  --accent: #8b5cf6; /* purple-magenta */
+  --success: #10b981;
+  --danger: #ef4444;
+
+  /* Semantic tokens */
+  --background: var(--bg);
+  --surface-1: var(--surface);
+  --surface-2: rgba(15,23,36,0.54);
+  --border: rgba(255,255,255,0.05);
+
+  /* Typography */
+  --font-sans: var(--font-geist-sans, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial);
+  --font-mono: var(--font-geist-mono, ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New", monospace);
+  --text-lg: 1.0625rem; /* 17px */
+  --text-base: 0.9375rem; /* 15px */
+  --lead: 1.125rem; /* 18px */
+
+  /* Spacing scale (4px base) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Radii & elevation */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --elevation-1: 0 6px 20px rgba(2,6,23,0.6);
+
+  /* Motion */
+  --motion-fast: 120ms;
+  --motion-medium: 220ms;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* Dark mode is the default; light mode disabled for now */
+/* @media (prefers-color-scheme: light) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --bg: #f7fafc;
+    --surface: #ffffff;
+    --text: #0f1720;
+    --muted: #64748b;
+    --border: rgba(2,6,23,0.06);
+  }
+} */
+
+/* Manual theme toggle overrides */
+[data-theme="light"] {
+  --bg: #f7fafc;
+  --surface: #ffffff;
+  --text: #0f1720;
+  --muted: #64748b;
+  --border: rgba(2,6,23,0.06);
+}
+
+[data-theme="dark"] {
+  --bg: #0b0f14;
+  --surface: #0f1720;
+  --text: #e6eef6;
+  --muted: #94a3b8;
+  --border: rgba(255,255,255,0.06);
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --motion-fast: 0ms;
+    --motion-medium: 0ms;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Base page styles */
+html, body, #__next {
+  height: 100%;
 }
+
+html {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+body {
+  background-color: var(--background);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: var(--text-base);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-image:
+    radial-gradient(circle at top left, rgba(56,189,248,0.06), transparent 22%),
+    radial-gradient(circle at bottom right, rgba(139,92,246,0.05), transparent 18%);
+}
+
+/* Surfaces & utility classes */
+.surface {
+  background-color: rgba(15,23,36,0.55); /* subtle separation */
+  border-radius: var(--radius-md);
+}
+
+.card {
+  padding: var(--space-4);
+  border-radius: 14px;
+  background-color: rgba(10,14,24,0.45);
+  border: 1px solid rgba(255,255,255,0.025);
+}
+
+.glass {
+  background: rgba(255,255,255,0.01);
+  backdrop-filter: blur(6px) saturate(120%);
+  border-radius: var(--radius-md);
+}
+
+.muted { color: var(--muted); }
+.accent { color: var(--accent); }
+.primary { color: var(--primary); }
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar { width: 10px; height: 10px; }
+.custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+.custom-scrollbar::-webkit-scrollbar-thumb { background: linear-gradient(180deg, rgba(99,102,241,0.2), rgba(6,182,212,0.2)); border-radius: 999px; border: 2px solid transparent; background-clip: padding-box; }
+
+/* Focus ring for accessibility */
+:focus {
+  outline: none;
+}
+*:focus-visible {
+  box-shadow: 0 0 0 3px rgba(6,182,212,0.12);
+  border-radius: 6px;
+}
+
+/* Utility: small hover elevation */
+.hover-elevate:hover { transform: translateY(-2px); transition: transform var(--motion-medium) ease; }
+
+/* Message bubble helper classes to complement Tailwind usage */
+.msg-user { background-color: rgba(255,255,255,0.02); border: none; }
+.msg-bot { background-color: transparent; border: none; opacity: 0.95; }
+
+/* Small helpers for typographic rhythm */
+.lead { font-size: var(--lead); line-height: 1.4; }
+.mono { font-family: var(--font-mono); }
+
+/* Keep legacy rules (Tailwind classes are used widely) */
+@layer utilities {
+  .text-ui { color: var(--text); }
+  .text-zinc-100 { color: #f5f5f7; }
+  .text-zinc-400 { color: #94a3b8; }
+  .text-zinc-500 { color: #64748b; }
+}
+
